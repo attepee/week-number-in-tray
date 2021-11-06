@@ -46,5 +46,17 @@ namespace week_number_in_tray.Properties {
                 this["fontColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool runOnStartup {
+            get {
+                return ((bool)(this["runOnStartup"]));
+            }
+            set {
+                this["runOnStartup"] = value;
+            }
+        }
     }
 }

@@ -20,9 +20,10 @@ namespace week_number_in_tray
             ShowIcon();
         }
 
+        private bool allowVisible;
+
         private void InitializeComponent()
         {
-            this.WindowState = FormWindowState.Minimized;
             this.components = new System.ComponentModel.Container();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.bgColorDialog = new System.Windows.Forms.ColorDialog();
@@ -78,7 +79,6 @@ namespace week_number_in_tray
             this.bgColorDisplay.Name = "bgColorDisplay";
             this.bgColorDisplay.Size = new System.Drawing.Size(23, 23);
             this.bgColorDisplay.TabIndex = 3;
-            this.bgColorDisplay.BackColor = Properties.Settings.Default.bgColor;
             // 
             // fontColorDisplay
             // 
@@ -87,7 +87,6 @@ namespace week_number_in_tray
             this.fontColorDisplay.Name = "fontColorDisplay";
             this.fontColorDisplay.Size = new System.Drawing.Size(23, 23);
             this.fontColorDisplay.TabIndex = 5;
-            this.fontColorDisplay.BackColor = Properties.Settings.Default.fontColor;
             // 
             // btnFontColor
             // 
@@ -120,10 +119,21 @@ namespace week_number_in_tray
             this.Controls.Add(this.lblBgColor);
             this.Controls.Add(this.btnBgColor);
             this.Name = "Form";
+            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Resize += new System.EventHandler(this.FormResized);
             this.ResumeLayout(false);
             this.PerformLayout();
 
+        }
+
+        protected override void SetVisibleCore(bool value)
+        {
+            if (!allowVisible)
+            {
+                value = false;
+                if (!this.IsHandleCreated) CreateHandle();
+            }
+            base.SetVisibleCore(value);
         }
 
         protected void ShowIcon()
@@ -164,6 +174,7 @@ namespace week_number_in_tray
 
         private void IconClicked(object sender, EventArgs e)
         {
+            allowVisible = true;
             Show();
             this.WindowState = FormWindowState.Normal;
         }
