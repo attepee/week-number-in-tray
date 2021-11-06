@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
+using Microsoft.Win32;
 
 namespace week_number_in_tray
 {
@@ -18,9 +19,14 @@ namespace week_number_in_tray
         {
             InitializeComponent();
             ShowIcon();
+
+            if (!Properties.Settings.Default.runOnStartup)
+                SetToRunOnStartup();
         }
 
         private bool allowVisible;
+        private static readonly string StartupKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
+        private static readonly string StartupValue = "Week-number-in-tray";
 
         private void InitializeComponent()
         {
@@ -170,6 +176,19 @@ namespace week_number_in_tray
             CalendarWeekRule calendarWeekRule = cultureInfo.DateTimeFormat.CalendarWeekRule;
             DayOfWeek firstDayOfWeek = cultureInfo.DateTimeFormat.FirstDayOfWeek;
             return calendar.GetWeekOfYear(DateTime.Now, calendarWeekRule, firstDayOfWeek);
+        }
+
+        private void SetToRunOnStartup()
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(StartupKey, true);
+            if (key != null)
+            {
+                key.SetValue(StartupValue, Application.ExecutablePath.ToString());
+                Properties.Settings.Default.runOnStartup = true;
+                Properties.Settings.Default.Save();
+            }
+            else
+                Console.WriteLine("Could not open the sub key");
         }
 
         private void IconClicked(object sender, EventArgs e)
