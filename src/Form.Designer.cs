@@ -33,6 +33,7 @@ namespace week_number_in_tray
         private System.Windows.Forms.Button btnFontColor;
         private System.Windows.Forms.ColorDialog fontColorDialog;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.CheckBox cbxRunOnStartup;
     }
 }
 

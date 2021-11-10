@@ -20,9 +20,6 @@ namespace week_number_in_tray
             InitializeComponent();
             SetProperties();
             ShowIcon();
-
-            if (!Properties.Settings.Default.runOnStartup)
-                SetToRunOnStartup();
         }
 
         private bool allowVisible;
@@ -42,6 +39,7 @@ namespace week_number_in_tray
             this.btnFontColor = new System.Windows.Forms.Button();
             this.fontColorDialog = new System.Windows.Forms.ColorDialog();
             this.btnSave = new System.Windows.Forms.Button();
+            this.cbxRunOnStartup = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // notifyIcon
@@ -115,9 +113,20 @@ namespace week_number_in_tray
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.SaveBtnClicked);
             // 
+            // cbxRunOnStartup
+            // 
+            this.cbxRunOnStartup.AutoSize = true;
+            this.cbxRunOnStartup.Location = new System.Drawing.Point(12, 73);
+            this.cbxRunOnStartup.Name = "cbxRunOnStartup";
+            this.cbxRunOnStartup.Size = new System.Drawing.Size(104, 19);
+            this.cbxRunOnStartup.TabIndex = 7;
+            this.cbxRunOnStartup.Text = "Run on startup";
+            this.cbxRunOnStartup.UseVisualStyleBackColor = true;
+            // 
             // Form
             // 
             this.ClientSize = new System.Drawing.Size(284, 102);
+            this.Controls.Add(this.cbxRunOnStartup);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.fontColorDisplay);
             this.Controls.Add(this.btnFontColor);
@@ -147,6 +156,7 @@ namespace week_number_in_tray
         {
             this.bgColorDisplay.BackColor = Properties.Settings.Default.bgColor;
             this.fontColorDisplay.BackColor = Properties.Settings.Default.fontColor;
+            this.cbxRunOnStartup.Checked = Properties.Settings.Default.runOnStartup;
         }
 
         private void ShowIcon()
@@ -185,14 +195,22 @@ namespace week_number_in_tray
             return calendar.GetWeekOfYear(DateTime.Now, calendarWeekRule, firstDayOfWeek);
         }
 
-        private void SetToRunOnStartup()
+        private void runOnStartup()
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(StartupKey, true);
             if (key != null)
             {
-                key.SetValue(StartupValue, Application.ExecutablePath.ToString());
-                Properties.Settings.Default.runOnStartup = true;
-                Properties.Settings.Default.Save();
+                if (this.cbxRunOnStartup.Checked)
+                {
+                    key.SetValue(StartupValue, Application.ExecutablePath.ToString());
+                    Properties.Settings.Default.runOnStartup = true;
+                    Properties.Settings.Default.Save();
+                }
+                else
+                {
+                    key.SetValue(StartupValue, "");
+                    Properties.Settings.Default.runOnStartup = false;
+                }
             }
             else
                 Console.WriteLine("Could not open the sub key");
@@ -229,6 +247,7 @@ namespace week_number_in_tray
 
         private void SaveBtnClicked(object sender, EventArgs e)
         {
+            runOnStartup();
             Properties.Settings.Default.Save();
             ShowIcon();
         }
