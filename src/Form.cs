@@ -168,24 +168,21 @@ namespace week_number_in_tray
 
             string week = GetWeek().ToString();
 
-            Font font = new Font("Tahoma", 12, FontStyle.Regular, GraphicsUnit.Pixel);
-            Brush brush = new SolidBrush(fontColor);
-            Bitmap bitmap = new Bitmap(16, 16);
-            Graphics g = System.Drawing.Graphics.FromImage(bitmap);
+            using Font font = new Font("Tahoma", 12, FontStyle.Regular, GraphicsUnit.Pixel);
+            using Brush brush = new SolidBrush(fontColor);
+            using Bitmap bitmap = new Bitmap(16, 16);
+            using Graphics g = System.Drawing.Graphics.FromImage(bitmap);
 
             g.Clear(bgColor);
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit;
             g.DrawString(week, font, brush, -1, 0);
             IntPtr hIcon = bitmap.GetHicon();
-            Icon icon = Icon.FromHandle(hIcon);
+            using Icon icon = Icon.FromHandle(hIcon);
 
             this.Icon = icon;
             notifyIcon.Icon = icon;
             notifyIcon.Text = $"Currently it's week {week}";
             notifyIcon.Visible = true;
-
-            bitmap.Dispose();
-            icon.Dispose();
         }
 
         private int GetWeek()
@@ -199,7 +196,7 @@ namespace week_number_in_tray
 
         private void runOnStartup()
         {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(StartupKey, true);
+            using RegistryKey key = Registry.CurrentUser.OpenSubKey(StartupKey, true);
             if (key != null)
             {
                 if (this.cbxRunOnStartup.Checked)
@@ -228,9 +225,7 @@ namespace week_number_in_tray
         private void FormResized(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
-            {
                 Hide();
-            }
         }
 
         private void BgColorBtnClicked(object sender, EventArgs e)
