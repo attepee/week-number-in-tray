@@ -18,6 +18,7 @@ namespace week_number_in_tray
         public Form()
         {
             InitializeComponent();
+            SetProperties();
             ShowIcon();
 
             if (!Properties.Settings.Default.runOnStartup)
@@ -142,7 +143,13 @@ namespace week_number_in_tray
             base.SetVisibleCore(value);
         }
 
-        protected void ShowIcon()
+        private void SetProperties()
+        {
+            this.bgColorDisplay.BackColor = Properties.Settings.Default.bgColor;
+            this.fontColorDisplay.BackColor = Properties.Settings.Default.fontColor;
+        }
+
+        private void ShowIcon()
         {
             Color bgColor = Properties.Settings.Default.bgColor;
             Color fontColor = Properties.Settings.Default.fontColor;
@@ -169,7 +176,7 @@ namespace week_number_in_tray
             icon.Dispose();
         }
 
-        public int GetWeek()
+        private int GetWeek()
         {
             CultureInfo cultureInfo = new CultureInfo("fi-FI");
             Calendar calendar = cultureInfo.Calendar;
