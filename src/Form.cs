@@ -134,7 +134,9 @@ namespace week_number_in_tray
             this.Controls.Add(this.lblFontColor);
             this.Controls.Add(this.lblBgColor);
             this.Controls.Add(this.btnBgColor);
+            this.MaximizeBox = false;
             this.Name = "Form";
+            this.Text = "Week-number-in-tray";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Resize += new System.EventHandler(this.FormResized);
             this.ResumeLayout(false);
