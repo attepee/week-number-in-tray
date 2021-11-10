@@ -203,11 +203,10 @@ namespace week_number_in_tray
                 {
                     key.SetValue(StartupValue, Application.StartupPath.ToString() + StartupValue + ".exe");
                     Properties.Settings.Default.runOnStartup = true;
-                    Properties.Settings.Default.Save();
                 }
                 else
                 {
-                    key.SetValue(StartupValue, "");
+                    key.DeleteValue(StartupValue);
                     Properties.Settings.Default.runOnStartup = false;
                 }
             }
