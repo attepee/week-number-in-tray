@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
 using Microsoft.Win32;
+using System.Threading;
 
 namespace week_number_in_tray
 {
@@ -20,6 +21,7 @@ namespace week_number_in_tray
             InitializeComponent();
             SetProperties();
             ShowIcon();
+            this.timer.Start();
         }
 
         private bool allowVisible;
@@ -40,6 +42,7 @@ namespace week_number_in_tray
             this.fontColorDialog = new System.Windows.Forms.ColorDialog();
             this.btnSave = new System.Windows.Forms.Button();
             this.cbxRunOnStartup = new System.Windows.Forms.CheckBox();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // notifyIcon
@@ -122,6 +125,11 @@ namespace week_number_in_tray
             this.cbxRunOnStartup.TabIndex = 7;
             this.cbxRunOnStartup.Text = "Run on startup";
             this.cbxRunOnStartup.UseVisualStyleBackColor = true;
+            // 
+            // timer
+            // 
+            this.timer.Interval = 600000;
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // Form
             // 
@@ -245,6 +253,11 @@ namespace week_number_in_tray
         {
             runOnStartup();
             Properties.Settings.Default.Save();
+            ShowIcon();
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
             ShowIcon();
         }
     }
