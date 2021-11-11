@@ -49,7 +49,7 @@ namespace week_number_in_tray
             // 
             this.notifyIcon.Text = "notifyIcon";
             this.notifyIcon.Visible = true;
-            this.notifyIcon.Click += new System.EventHandler(this.IconClicked);
+            this.notifyIcon.Click += new System.EventHandler(this.notifyIcon_Click);
             // 
             // btnBgColor
             // 
@@ -59,7 +59,7 @@ namespace week_number_in_tray
             this.btnBgColor.TabIndex = 0;
             this.btnBgColor.Text = "Select";
             this.btnBgColor.UseVisualStyleBackColor = true;
-            this.btnBgColor.Click += new System.EventHandler(this.BgColorBtnClicked);
+            this.btnBgColor.Click += new System.EventHandler(this.btnBgColor_Click);
             // 
             // lblBgColor
             // 
@@ -104,7 +104,7 @@ namespace week_number_in_tray
             this.btnFontColor.TabIndex = 4;
             this.btnFontColor.Text = "Select";
             this.btnFontColor.UseVisualStyleBackColor = true;
-            this.btnFontColor.Click += new System.EventHandler(this.FontColorBtnClicked);
+            this.btnFontColor.Click += new System.EventHandler(this.btnFontColor_Click);
             // 
             // btnSave
             // 
@@ -114,7 +114,7 @@ namespace week_number_in_tray
             this.btnSave.TabIndex = 6;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.SaveBtnClicked);
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // cbxRunOnStartup
             // 
@@ -146,7 +146,7 @@ namespace week_number_in_tray
             this.Name = "Form";
             this.Text = "Week-number-in-tray";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
-            this.Resize += new System.EventHandler(this.FormResized);
+            this.Resize += new System.EventHandler(this.Form_Resize);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -219,37 +219,37 @@ namespace week_number_in_tray
                 }
             }
             else
-                Console.WriteLine("Could not open the sub key");
+                MessageBox.Show("Could not open the sub key");
         }
 
-        private void IconClicked(object sender, EventArgs e)
+        private void Form_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+                Hide();
+        }
+
+        private void notifyIcon_Click(object sender, EventArgs e)
         {
             allowVisible = true;
             Show();
             this.WindowState = FormWindowState.Normal;
         }
 
-        private void FormResized(object sender, EventArgs e)
-        {
-            if (this.WindowState == FormWindowState.Minimized)
-                Hide();
-        }
-
-        private void BgColorBtnClicked(object sender, EventArgs e)
+        private void btnBgColor_Click(object sender, EventArgs e)
         {
             bgColorDialog.ShowDialog();
             bgColorDisplay.BackColor = bgColorDialog.Color;
             Properties.Settings.Default.bgColor = bgColorDialog.Color;
         }
 
-        private void FontColorBtnClicked(object sender, EventArgs e)
+        private void btnFontColor_Click(object sender, EventArgs e)
         {
             fontColorDialog.ShowDialog();
             fontColorDisplay.BackColor = fontColorDialog.Color;
             Properties.Settings.Default.fontColor = fontColorDialog.Color;
         }
 
-        private void SaveBtnClicked(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
             runOnStartup();
             Properties.Settings.Default.Save();
