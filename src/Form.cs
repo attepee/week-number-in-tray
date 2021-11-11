@@ -18,7 +18,7 @@ namespace week_number_in_tray
 
         private bool allowVisible;
         private static readonly string StartupKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
-        private static readonly string StartupValue = "week-number-in-tray";
+        private static readonly string StartupValue = "Week-number-in-tray";
 
         private void InitializeComponent()
         {

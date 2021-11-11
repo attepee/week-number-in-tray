@@ -5,6 +5,17 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>week_number_in_tray</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
+    <Version>0.1</Version>
+    <Authors>Atte P</Authors>
+    <Company>Week-number-in-tray</Company>
+    <Product>Week-number-in-tray</Product>
+    <PackageId>Week-number-in-tray</PackageId>
+    <Description>Small WinForms application that shows the current week number in system tray.</Description>
+    <Copyright />
+    <PackageLicenseExpression></PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/attepee/week-number-in-tray</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +30,10 @@
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
     </None>
   </ItemGroup>
 
